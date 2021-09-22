@@ -8,11 +8,20 @@ The API status may be consulted at https://happliance.herokuapp.com/actuator/hea
 
 The API documentation is available at https://happliance.herokuapp.com/swagger-ui.html
 
-You can make a GET request at https://happliance.herokuapp.com/api/v1/appliances/name?name={home appliance name} where {home appliance name} is case insensitive, written in Portuguese.
+| Description                              | Auth | HTTPS | CORS    |
+| ---------------------------------------- | ---- | ----- | ------- |
+| Brazilian home appliances' energy consumption | No   | Yes   | Yes |
+
+### Endpoints
+There are two endpoints available.
+
+The first one returns energy consumption data about the given product name. You can make a GET request at https://happliance.herokuapp.com/api/v1/appliances/<u>{name}</u>, where {name} is case insensitive and must be written in Portuguese.
+
+The other returns the complete list of appliance names: GET request at https://happliance.herokuapp.com/api/v1/appliances
 
 Let's search information about "aquecedor de ambiente":
 
-https://happliance.herokuapp.com/api/v1/appliances/name?name=aquecedor de ambiente
+https://happliance.herokuapp.com/api/v1/appliances/aquecedor<u> de ambiente</u>
 
 Don't worry about blank spaces in your request. Your browser will treat them correctly.
 
@@ -29,6 +38,8 @@ You'll get an answer like that:
     "averageMonthlyConsumption": 186.0
 }
 ```
+
+
 
 |                                     |                       |
 | ----------------------------------- | --------------------- |

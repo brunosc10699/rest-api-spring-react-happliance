@@ -7,6 +7,8 @@ import com.bruno.homeappliance.services.HomeApplianceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class HomeApplianceServiceImpl implements HomeApplianceService {
@@ -18,5 +20,10 @@ public class HomeApplianceServiceImpl implements HomeApplianceService {
         HomeAppliance homeAppliance = homeApplianceRepository.findByNameIgnoreCase(name)
                 .orElse(new HomeAppliance());
         return new HomeApplianceDTO(homeAppliance);
+    }
+
+    @Override
+    public List<String> findAllProductNames() {
+        return homeApplianceRepository.findAllProductNames();
     }
 }
