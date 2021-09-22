@@ -12,7 +12,6 @@ import java.util.Optional;
 @Repository
 public interface HomeApplianceRepository extends JpaRepository<HomeAppliance, String> {
 
-    @Transactional(readOnly = true)
     Optional<HomeAppliance> findByNameIgnoreCase(String name);
 
     @Query("select h.name from HomeAppliance h")

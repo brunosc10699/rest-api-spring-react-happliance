@@ -6,6 +6,7 @@ import com.bruno.homeappliance.repositories.HomeApplianceRepository;
 import com.bruno.homeappliance.services.HomeApplianceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -15,6 +16,7 @@ public class HomeApplianceServiceImpl implements HomeApplianceService {
 
     private final HomeApplianceRepository homeApplianceRepository;
 
+    @Transactional(readOnly = true)
     @Override
     public HomeApplianceDTO findByNameIgnoreCase(String name) {
         HomeAppliance homeAppliance = homeApplianceRepository.findByNameIgnoreCase(name)
@@ -22,6 +24,7 @@ public class HomeApplianceServiceImpl implements HomeApplianceService {
         return new HomeApplianceDTO(homeAppliance);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<String> findAllProductNames() {
         return homeApplianceRepository.findAllProductNames();
