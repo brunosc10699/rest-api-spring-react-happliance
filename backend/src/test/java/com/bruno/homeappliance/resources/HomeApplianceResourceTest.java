@@ -1,6 +1,7 @@
 package com.bruno.homeappliance.resources;
 
 import com.bruno.homeappliance.dto.HomeApplianceDTO;
+import com.bruno.homeappliance.services.exceptions.ResourceNotFoundException;
 import com.bruno.homeappliance.services.impl.HomeApplianceServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -16,7 +17,11 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
-import static org.mockito.ArgumentMatchers.nullable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -43,20 +48,41 @@ public class HomeApplianceResourceTest {
 
     @Test
     @DisplayName("Must return 200 Ok status when calling findByNameIgnoreCase method with arguments")
-    void mustReturn200OkStatusWhenCallingFindByNameIgnoreCaseMethod() throws Exception {
+    void whenCallingFindByNameIgnoreCaseMethodMustReturn200OkStatus() throws Exception {
         HomeApplianceDTO homeApplianceDTO = new HomeApplianceDTO("Vacuum", 300, 10, 1, 10.0);
-        when(homeApplianceService.findByNameIgnoreCase(homeApplianceDTO.getName())).thenReturn(homeApplianceDTO);
-        mockMvc.perform(MockMvcRequestBuilders.get(URN + "name?name=" + homeApplianceDTO.getName())
+        String name = "Vacuum";
+        when(homeApplianceService.findByNameIgnoreCase(name)).thenReturn(homeApplianceDTO);
+        mockMvc.perform(MockMvcRequestBuilders.get(URN + name + "/get")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
 
     @Test
-    @DisplayName("Must return 200 Ok status when calling findByNameIgnoreCase method with no arguments")
-    void mustReturn200OkStatusWhenCallingFindByNameIgnoreCaseMethodWithNoArguments() throws Exception {
-        when(homeApplianceService.findByNameIgnoreCase("")).thenReturn(nullable(HomeApplianceDTO.class));
-        mockMvc.perform(MockMvcRequestBuilders.get(URN + "name?name=")
+    @DisplayName("Must return 404 NotFound status when calling findByNameIgnoreCase method with invalid arguments")
+    void whenCallingFindByNameIgnoreCaseMethodWithInvalidArgumentsMustReturn404NotFoundStatus() throws Exception {
+        String name = "a";
+        doThrow(ResourceNotFoundException.class).when(homeApplianceService).findByNameIgnoreCase(name);
+        mockMvc.perform(MockMvcRequestBuilders.get(URN + name + "/get")
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    @DisplayName("When GET is called return 200 OK Status")
+    void whenGETIsCalledThenReturn200OKStatus() throws Exception {
+        String name = "Vacuum";
+        when(homeApplianceService.findAllProductNames()).thenReturn(Collections.singletonList(name));
+        mockMvc.perform(MockMvcRequestBuilders.get(URN + "names/get")
+        .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isOk());
+    }
+
+    @Test
+    @DisplayName("When GET is called return 200 OK Status and an empty list of home appliance names")
+    void whenGETIsCalledThenReturnAnEmptyListAnd200OKStatus() throws Exception {
+        when(homeApplianceService.findAllProductNames()).thenReturn(Collections.singletonList(null));
+        mockMvc.perform(MockMvcRequestBuilders.get(URN + "names/get")
+        .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isOk());
     }
 }

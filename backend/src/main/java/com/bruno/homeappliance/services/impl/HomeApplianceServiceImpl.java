@@ -4,6 +4,7 @@ import com.bruno.homeappliance.dto.HomeApplianceDTO;
 import com.bruno.homeappliance.entities.HomeAppliance;
 import com.bruno.homeappliance.repositories.HomeApplianceRepository;
 import com.bruno.homeappliance.services.HomeApplianceService;
+import com.bruno.homeappliance.services.exceptions.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +21,7 @@ public class HomeApplianceServiceImpl implements HomeApplianceService {
     @Override
     public HomeApplianceDTO findByNameIgnoreCase(String name) {
         HomeAppliance homeAppliance = homeApplianceRepository.findByNameIgnoreCase(name)
-                .orElse(new HomeAppliance());
+                .orElseThrow(() -> new ResourceNotFoundException(name));
         return new HomeApplianceDTO(homeAppliance);
     }
 

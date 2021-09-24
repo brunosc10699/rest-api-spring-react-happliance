@@ -18,12 +18,12 @@ public class HomeApplianceResource {
 
     private final HomeApplianceServiceImpl homeApplianceService;
 
-    @GetMapping(value = "/{name}")
+    @GetMapping(value = "/{name}/get")
     public ResponseEntity<HomeApplianceDTO> findByNameIgnoreCase(@PathVariable String name){
         return ResponseEntity.ok(homeApplianceService.findByNameIgnoreCase(name));
     }
 
-    @GetMapping
+    @GetMapping(value = "/names/get")
     public ResponseEntity<List<String>> findAllProductNames(){
         return ResponseEntity.ok(homeApplianceService.findAllProductNames());
     }

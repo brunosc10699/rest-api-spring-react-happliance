@@ -15,13 +15,13 @@ The API documentation is available at https://happliance.herokuapp.com/swagger-u
 ### Endpoints
 There are two endpoints available.
 
-The first one returns energy consumption data about the given product name. You can make a GET request at https://happliance.herokuapp.com/api/v1/appliances/<u>{name}</u>, where {name} is case insensitive and must be written in Portuguese.
+The first one returns energy consumption data about the given product name. You can make a GET request at https://happliance.herokuapp.com/api/v1/appliances/<u>{name}</u>/get, where {name} is case insensitive and must be written in Portuguese.
 
-The other returns the complete list of appliance names: GET request at https://happliance.herokuapp.com/api/v1/appliances
+The other returns the complete list of appliance names: GET request at https://happliance.herokuapp.com/api/v1/appliances/names/get
 
 Let's search information about "aquecedor de ambiente":
 
-https://happliance.herokuapp.com/api/v1/appliances/aquecedor<u> de ambiente</u>
+https://happliance.herokuapp.com/api/v1/appliances/aquecedor<u> de ambiente</u><u>/get</u>
 
 Don't worry about blank spaces in your request. Your browser will treat them correctly.
 
