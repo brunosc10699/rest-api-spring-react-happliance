@@ -1,2 +1,0 @@
-insert into tb_home_appliances (name, power, monthly_use, daily_use, average_monthly_consumption) values ('Chuveiro elétrico 4500W', 4500, 30, 32, 72.0);
-insert into tb_home_appliances (name, power, monthly_use, daily_use, average_monthly_consumption) values ('Chuveiro elétrico 5500W', 5500, 30, 32, 88.0);

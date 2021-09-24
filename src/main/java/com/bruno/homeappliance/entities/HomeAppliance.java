@@ -9,7 +9,7 @@ import javax.persistence.Table;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "tb_home_appliances")
+@Table(name = "tb_home_appliance")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

@@ -3,6 +3,7 @@ package com.bruno.homeappliance.services;
 import com.bruno.homeappliance.dto.HomeApplianceDTO;
 import com.bruno.homeappliance.entities.HomeAppliance;
 import com.bruno.homeappliance.repositories.HomeApplianceRepository;
+import com.bruno.homeappliance.services.exceptions.ResourceNotFoundException;
 import com.bruno.homeappliance.services.impl.HomeApplianceServiceImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,6 +12,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -18,6 +22,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.core.Is.is;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -30,8 +35,8 @@ public class HomeApplianceServiceImplTest {
     private HomeApplianceServiceImpl homeApplianceService;
 
     @Test
-    @DisplayName("Must return a HomeApplianceDTO object")
-    void mustReturnAHomeApplianceDTOObject(){
+    @DisplayName("Must return a HomeApplianceDTO object when calling findByNameIgnoreCase repository method")
+    void whenCallingFindByNameIgnoreCaseMethodThenReturnAHomeApplianceDTOObject(){
         HomeAppliance homeAppliance = new HomeAppliance("Vacuum", 300, 10, 1, 10.0);
         HomeApplianceDTO homeApplianceDTO;
         when(homeApplianceRepository.findByNameIgnoreCase("vacuum")).thenReturn(Optional.of(homeAppliance));
@@ -46,17 +51,32 @@ public class HomeApplianceServiceImplTest {
     }
 
     @Test
-    @DisplayName("Must return an empty object")
-    void mustReturnAnEmptyObject(){
-        HomeApplianceDTO homeApplianceDTO;
+    @DisplayName("Must throw an exception when calling findByNameIgnoreCase repository method")
+    void whenCallingFindByNameIgnoreCaseMethodThenThrowResourceNotFoundException(){
         when(homeApplianceRepository.findByNameIgnoreCase("vacuum")).thenReturn(Optional.empty());
-        homeApplianceDTO = homeApplianceService.findByNameIgnoreCase("vacuum");
+        assertThrows(ResourceNotFoundException.class, () -> homeApplianceService.findByNameIgnoreCase("vacuum"));
+    }
+
+    @Test
+    @DisplayName("Must return a list of home appliance names when calling findAllProductNames repository method")
+    void whenCallingFindAllProductNamesMethodThenReturnAListOfHomeApplianceNames(){
+        List<String> names = new ArrayList<>();
+        names.addAll(Arrays.asList("Vacuum", "Sound System", "Refrigerator"));
+        when(homeApplianceRepository.findAllProductNames()).thenReturn(names);
+        List<String> applianceNames = homeApplianceService.findAllProductNames();
         assertAll(
-                () -> assertThat(homeApplianceDTO.getName(), is(nullValue())),
-                () -> assertThat(homeApplianceDTO.getPower(), is(nullValue())),
-                () -> assertThat(homeApplianceDTO.getMonthlyUse(), is(nullValue())),
-                () -> assertThat(homeApplianceDTO.getDailyUse(), is(nullValue())),
-                () -> assertThat(homeApplianceDTO.getAverageMonthlyConsumption(), is(nullValue()))
+                () -> assertThat(applianceNames.size(), is(equalTo(names.size()))),
+                () -> assertThat(applianceNames.isEmpty(), is(equalTo(false))),
+                () -> assertThat(applianceNames.get(0), is(equalTo("Vacuum")))
         );
+    }
+
+    @Test
+    @DisplayName("Must return an empty list of home appliance names when calling findAllProductNames repository method")
+    void whenCallingFindAllProductNamesMethodThenReturnAnEmptyListOfHomeApplianceNames(){
+        List<String> names = new ArrayList<>();
+        when(homeApplianceRepository.findAllProductNames()).thenReturn(names);
+        List<String> applianceNames = homeApplianceService.findAllProductNames();
+        assertThat(applianceNames.isEmpty(), is(equalTo(true)));
     }
 }
