@@ -33,9 +33,9 @@ You'll get an answer like that:
 {
     "name": "Enceradeira",
     "power": 500,
-    "monthlyUse": 2,
+    "monthlyUsage": 2,
     "dailyUse": 120,
-    "averageMonthlyConsumption": 2.0
+    "monthlyConsumptionAverage": 2.0
 }
 ```
 
@@ -45,9 +45,9 @@ You'll get an answer like that:
 | ---------------------------------- | ----------- |
 | name (text)                        | Enceradeira |
 | power (in Watts)                   | 500         |
-| monthlyUse (days a month)          | 2           |
+| monthlyUsage (days a month)        | 2           |
 | dailyUse (minutes a day)           | 120         |
-| averageMonthlyConsumption (in kWh) | 2.00        |
+| monthlyConsumptionAverage (in kWh) | 2.00        |
 
 #### You must consider
 

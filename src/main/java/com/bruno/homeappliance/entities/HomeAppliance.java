@@ -25,9 +25,9 @@ public class HomeAppliance implements Serializable {
     @Column(nullable = false)
     private Integer power;
 
-    private Integer monthlyUse;
+    private Integer monthlyUsage;
     private Integer dailyUse;
 
     @Column(nullable = false)
-    private Double averageMonthlyConsumption;
+    private Double monthlyConsumptionAverage;
 }

@@ -31,9 +31,9 @@ public class HomeApplianceDTO implements Serializable {
     public HomeApplianceDTO(HomeAppliance homeAppliance){
         name = homeAppliance.getName();
         power = homeAppliance.getPower();
-        monthlyUse = homeAppliance.getMonthlyUse();
+        monthlyUse = homeAppliance.getMonthlyUsage();
         dailyUse = homeAppliance.getDailyUse();
-        averageMonthlyConsumption = homeAppliance.getAverageMonthlyConsumption();
+        averageMonthlyConsumption = homeAppliance.getMonthlyConsumptionAverage();
     }
 
 }
