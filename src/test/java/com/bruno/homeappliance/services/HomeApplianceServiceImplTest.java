@@ -44,9 +44,9 @@ public class HomeApplianceServiceImplTest {
         assertAll(
                 () -> assertThat(homeApplianceDTO.getName(), is(equalTo("Vacuum"))),
                 () -> assertThat(homeApplianceDTO.getPower(), is(equalTo(300))),
-                () -> assertThat(homeApplianceDTO.getMonthlyUse(), is(equalTo(10))),
+                () -> assertThat(homeApplianceDTO.getMonthlyUsage(), is(equalTo(10))),
                 () -> assertThat(homeApplianceDTO.getDailyUse(), is(equalTo(1))),
-                () -> assertThat(homeApplianceDTO.getAverageMonthlyConsumption(), is(equalTo(10.0)))
+                () -> assertThat(homeApplianceDTO.getMonthlyConsumptionAverage(), is(equalTo(10.0)))
         );
     }
 

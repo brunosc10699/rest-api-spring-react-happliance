@@ -22,18 +22,18 @@ public class HomeApplianceDTO implements Serializable {
     @Size(message = "Enter the power of the home appliance in Watts")
     private Integer power;
 
-    private Integer monthlyUse;
+    private Integer monthlyUsage;
     private Integer dailyUse;
 
     @NotBlank(message = "Enter the appliance's average monthly consumption in kWh")
-    private Double averageMonthlyConsumption;
+    private Double monthlyConsumptionAverage;
 
     public HomeApplianceDTO(HomeAppliance homeAppliance){
         name = homeAppliance.getName();
         power = homeAppliance.getPower();
-        monthlyUse = homeAppliance.getMonthlyUsage();
+        monthlyUsage = homeAppliance.getMonthlyUsage();
         dailyUse = homeAppliance.getDailyUse();
-        averageMonthlyConsumption = homeAppliance.getMonthlyConsumptionAverage();
+        monthlyConsumptionAverage = homeAppliance.getMonthlyConsumptionAverage();
     }
 
 }
